@@ -1,0 +1,14 @@
+<#-- 设置freemarker的全局变量，所有的html页面都引入这个文件 -->
+
+<#assign jsversion="201202141407" /> 
+<#assign security=JspTaglibs["/WEB-INF/security.tld"] />
+
+<#macro js file="">
+	<#if file==""><#return></#if>
+	<script type="text/javascript" src="${file}?v=${jsversion}"></script>
+</#macro>
+
+<#macro css file="">
+	<#if file==""><#return></#if>
+	<link type="text/css" rel="stylesheet" media="all" href="${file}?v=${jsversion}"/>
+</#macro>
