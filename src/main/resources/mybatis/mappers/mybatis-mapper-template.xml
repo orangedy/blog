@@ -11,7 +11,4 @@
 		<result property="pwd" column="password" />
 	</resultMap> -->
 	
-	<select id="selectUser" resultType="com.netease.shijin.yitao.User">
-		select * from user where id = #{id}
-	</select>
 </mapper>

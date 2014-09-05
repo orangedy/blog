@@ -9,23 +9,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.Controller;
 
 /**
  *
  * @author hzdingyong
  * @version 2014年8月14日
  */
-@RequestMapping(value = "/test")
-@Controller
-public class NormalController extends AbstractController {
+public class NormalController extends AbstractController implements Controller {
     private static final Logger logger = Logger.getLogger(NormalController.class);
-    private final static Pattern p = Pattern.compile("^(.+)\\.html(;.+)?");// bugfix:
-                                                                           // 第一次请求的时候会附一个;jsessionid=??
+    private final static Pattern p = Pattern.compile("^(.+)\\.html(;.+)?");// 第一次请求的时候会附一个;jsessionid=??
 
     /**
      * 直接返回.html以前的东西
@@ -37,24 +31,14 @@ public class NormalController extends AbstractController {
         Matcher m = p.matcher(uri);
         if (m.matches()) {
             destiny = m.group(1);
-        } else if (uri.equals("/")) {// 这个为什么没有被自动转成 /index.html呢？welcome-file-list不是这么用的？
+        } /*else if (uri.equals("/")) {// 这个为什么没有被自动转成 /index.html呢？welcome-file-list不是这么用的？
             destiny = "/index";
-        } else {
+          }*/else {
             logger.warn("page not found!!!!! uri=" + uri);
             destiny = "/common/404";
         }
         Map<String, Object> model = new HashMap<String, Object>();
-        // model.put("checkAuthority", checkAuthority);
-        // model.put("adminAccount", super.getOperatorFromContext());
-
         return new ModelAndView(destiny, model);
-    }
-
-    @RequestMapping(value = "hello", method = RequestMethod.GET)
-    public @ResponseBody Map<String, String> test() {
-        Map<String, String> result = new HashMap<String, String>();
-        result.put("hello", "world");
-        return result;
     }
 
     public static void main(String[] args) {

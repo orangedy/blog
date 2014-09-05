@@ -10,22 +10,27 @@
 
 	<!-- Root Context: defines shared resources visible to all other web components -->
 
-	<!-- CSRF protection. Here we only include the CsrfFilter instead of all 
-		of Spring Security. See http://docs.spring.io/spring-security/site/docs/3.2.x/reference/htmlsingle/#csrf 
+	<!-- CSRF protection. Here we only include the CsrfFilter instead of all of Spring Security. See http://docs.spring.io/spring-security/site/docs/3.2.x/reference/htmlsingle/#csrf 
 		for more information on Spring Security's CSRF protection -->
-	<!-- <bean id="csrfFilter" class="org.springframework.security.web.csrf.CsrfFilter"> 
-		<constructor-arg> <bean class="org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository" 
+	<!-- <bean id="csrfFilter" class="org.springframework.security.web.csrf.CsrfFilter"> <constructor-arg> <bean class="org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository" 
 		/> </constructor-arg> </bean> -->
 
-	<!-- Provides automatic CSRF token inclusion when using Spring MVC Form 
-		tags or Thymeleaf. See http://localhost:8080/#forms and form.jsp for examples -->
+	<!-- Provides automatic CSRF token inclusion when using Spring MVC Form tags or Thymeleaf. See http://localhost:8080/#forms 
+		and form.jsp for examples -->
 	<!-- <bean id="requestDataValueProcessor" class="org.springframework.security.web.servlet.support.csrf.CsrfRequestDataValueProcessor" 
 		/> -->
+	<bean id="dbPropertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="ignoreUnresolvablePlaceholders" value="true" />
+		<property name="location">
+			<value>classpath:mysql.properties</value>
+		</property>
+	</bean>
 
-	<!-- <import resource="classpath:mybatis/mybatis-config.xml" />
+	<import resource="classpath:mybatis/mybatis-config.xml" />
 
-	<import resource="classpath:dao-template.xml" />
-
-	<import resource="classpath:service-template.xml" /> -->
-
+	<!-- <import resource="classpath:dao-template.xml" /> <import resource="classpath:service-template.xml" /> -->
+	<context:component-scan base-package="com.netease.dy.controller">
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />
+	</context:component-scan>
 </beans>
